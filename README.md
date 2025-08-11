@@ -51,18 +51,22 @@ sequenceDiagram
 
 ```mermaid
 flowchart LR
+  %% Define classes BEFORE using them
+  classDef safe fill:#0b5,stroke:#000,color:#fff;
+
   subgraph Client
-    A[Private Key (IndexedDB)]:::safe --> D[Decrypt JWE in JS]
+    A[Private Key (IndexedDB)] --> D[Decrypt JWE in JS]
     D --> E[Render Poem]
   end
 
   subgraph Server
-    B[(Public JWK by kid)]:::safe --> C[Encrypt JSON → JWE]
+    B[Public JWK by kid] --> C[Encrypt JSON to JWE]
   end
 
-  C == compact JWE ==> D
+  C -- compact JWE --> D
 
-  classDef safe fill:#0b5,stroke:#0,stroke-width:0,color:#fff
+  %% Apply classes after nodes exist
+  class A,B safe
 ```
 
 ---
